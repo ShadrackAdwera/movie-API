@@ -14,7 +14,6 @@ POJOs are used to store movie details from the title, release year, the director
 * The code can be run on any java IDE: NetBeans, IntelliJ IDEA, Eclipse etc
 * Download and install [postman](https://www.getpostman.com/downloads/), in order to fire JSON at the API and get JSON back when a request is made then,
 * On IntelliJ, run the command **$ gradle run** and write the url **localhost:4567** on postman to test the end points
-![landing-page](src/main/resources/public/images/postman1.png)
 * A postgres database also needs to be [installed](https://www.2ndquadrant.com/en/blog/pginstaller-install-postgresql/)
 * Once installed, fire up the database by typing on the terminal **$ psql** and you can now create a [user with a password](https://www.postgresql.org/docs/8.0/sql-createuser.html) . Make sure to edit the connection string in the **app.java** file with the credentails(user name and password) created in order to connect to your database.
 * Recreate the tables and the database by running the command **psql < create.sql**
