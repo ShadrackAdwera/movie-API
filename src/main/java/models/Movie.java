@@ -1,5 +1,7 @@
 package models;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
 
 public class Movie {
@@ -21,6 +23,7 @@ public class Movie {
         this.summary = summary;
         this.review = review;
         this.reviewTime = System.currentTimeMillis();
+        setFormattedReviewTime();
 
     }
 
@@ -102,11 +105,18 @@ public class Movie {
     }
 
     public String getFormattedReviewTime() {
-        return formattedReviewTime;
+        Date date = new Date(reviewTime);
+        String formattedDate = "DD:MM:YYYY @HH:MM AM/PM";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(formattedDate);
+        return simpleDateFormat.format(date);
+
     }
 
-    public void setFormattedReviewTime(String formattedReviewTime) {
-        this.formattedReviewTime = formattedReviewTime;
+    public void setFormattedReviewTime() {
+        Date date = new Date(this.reviewTime);
+        String formattedDate = "DD:MM:YYYY @HH:MM AM/PM";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(formattedDate);
+        this.formattedReviewTime = simpleDateFormat.format(date);
     }
 
     public int getId() {
