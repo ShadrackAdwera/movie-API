@@ -8,17 +8,21 @@ import org.junit.Test;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
+import java.util.Arrays;
+
 import static org.junit.Assert.*;
 
 public class Sql2oMovieDaoTest {
 
     private Sql2oMovieDao movieDao;
+    private Sql2oCategoryDao categoryDao;
     private Connection conn;
 
     @Before
     public void setUp() throws Exception {
         String connectionString = "jdbc:h2:mem:testing;INIT=RUNSCRIPT from 'classpath:db/create.sql'";
         Sql2o sql2o = new Sql2o(connectionString, "", "");
+        categoryDao = new Sql2oCategoryDao(sql2o);
         movieDao = new Sql2oMovieDao(sql2o);
         conn = sql2o.open();
     }
@@ -38,17 +42,36 @@ public class Sql2oMovieDaoTest {
 
     }
 
-//    @Test
-//    public void addCategoryToMovie() {
-//        Movie movie = setUpMovie();
-//        movieDao.save(movie);
-//        Category category = new Category("Horror", "Haunted House");
-//
-//    }
-//
-//    @Test
-//    public void getAllCategoriesInAMovie() {
-//    }
+    @Test
+    public void addCategoryToMovie() {
+        Movie movie = setUpMovie();
+        movieDao.save(movie);
+        Category category = new Category("Horror", "Haunted House");
+        categoryDao.save(category);
+        Category category1 = new Category("Comedy","Laugh your ass out");
+        movieDao.addCategoryToMovie(movie,category);
+        movieDao.addCategoryToMovie(movie,category1);
+        assertEquals(2, movieDao.getAllCategoriesInAMovie(movie.getId()).size());
+
+    }
+
+    @Test
+    public void getAllCategoriesInAMovie() {
+        Movie movie = setUpMovie();
+        movieDao.save(movie);
+        Movie movie1 = setUpMovie();
+        movieDao.save(movie1);
+        Category category = new Category("Horror", "Haunted House");
+        categoryDao.save(category);
+        Category category1 = new Category("Comedy","Laugh your ass out");
+        categoryDao.save(category1);
+        movieDao.addCategoryToMovie(movie,category);
+        movieDao.addCategoryToMovie(movie,category1);
+
+        Category [] categories = {category, category1};
+        assertEquals(Arrays.asList(categories), movieDao.getAllCategoriesInAMovie(movie.getId()));
+
+    }
 
     @Test
     public void allMovies_moviesFoundByAllMovies() {
