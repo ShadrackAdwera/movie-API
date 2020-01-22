@@ -4,7 +4,7 @@ import models.Movie;
 
 import java.util.List;
 
-public interface Sql2oMovieDao {
+public interface MovieDao {
 
     //CREATE
     void save(Movie movie);
