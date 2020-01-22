@@ -8,7 +8,6 @@ import org.junit.Test;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 
 import static org.junit.Assert.*;
