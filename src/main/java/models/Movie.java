@@ -22,8 +22,8 @@ public class Movie implements Comparable<Movie> {
         this.duration = duration;
         this.summary = summary;
         this.review = review;
-        this.reviewTime = System.currentTimeMillis();
-        setFormattedReviewTime();
+        //this.reviewTime = System.currentTimeMillis();
+        //setFormattedReviewTime();
 
     }
 

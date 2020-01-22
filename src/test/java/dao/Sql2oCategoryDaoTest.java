@@ -2,9 +2,7 @@ package dao;
 
 import models.Category;
 import models.Movie;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
@@ -14,24 +12,31 @@ import static org.junit.Assert.*;
 
 public class Sql2oCategoryDaoTest {
 
-    private Sql2oMovieDao movieDao;
-    private Sql2oCategoryDao categoryDao;
-    private Connection conn;
+    private static Sql2oMovieDao movieDao;
+    private static Sql2oCategoryDao categoryDao;
+    private static Connection connection;
 
-    @Before
-    public void setUp() throws Exception {
-        String connectionString = "jdbc:h2:mem:testing;INIT=RUNSCRIPT from 'classpath:db/create.sql'";
-        Sql2o sql2o = new Sql2o(connectionString, "", "");
+    @BeforeClass
+    public static void setUp() throws Exception {
+        String connectionString = "jdbc:postgresql://localhost:5432/movie_api_test";
+        Sql2o sql2o = new Sql2o(connectionString, "adwesh", "password");
         categoryDao = new Sql2oCategoryDao(sql2o);
         movieDao = new Sql2oMovieDao(sql2o);
-        conn = sql2o.open();
+        connection = sql2o.open();
     }
 
     @After
     public void tearDown() throws Exception {
-        System.out.println("TEARING DOWN DATABASE!!!");
-        conn.close();
+        System.out.println("CLEARING DATABASE!!!");
+        categoryDao.clearAll();
+        movieDao.clearAll();
     }
+    @AfterClass
+    public static void shutDown(){
+        System.out.println("SHUTTING DOWN DATABASE!!!!");
+        connection.close();
+    }
+
 
     @Test
     public void save_addsCategorySuccessfullyWithId() {

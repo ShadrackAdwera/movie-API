@@ -14,8 +14,8 @@ public class App {
     public static void main(String[]args){
         Connection connection;
         Gson gson = new Gson();
-        String connectionString = "jdbc:h2:~/movie-API.db;INIT=RUNSCRIPT from 'classpath:db/create.sql'";
-        Sql2o sql2o = new Sql2o(connectionString, "", "");
+        String connectionString = "jdbc:postgresql://localhost:5432/movie_api";
+        Sql2o sql2o = new Sql2o(connectionString, "adwesh", "password");
         Sql2oMovieDao movieDao = new Sql2oMovieDao(sql2o);
         Sql2oCategoryDao categoryDao = new Sql2oCategoryDao(sql2o);
         connection = sql2o.open();

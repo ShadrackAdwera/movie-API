@@ -20,7 +20,7 @@ public class Sql2oCategoryDao implements CategoryDao {
     public void save(Category category){
         String sql = "INSERT INTO category (name, description) VALUES (:name, :description)";
         try (Connection connection = sql2o.open()){
-            int id = (int) connection.createQuery(sql)
+            int id = (int) connection.createQuery(sql, true)
                     .bind(category)
                     .executeUpdate()
                     .getKey();
