@@ -16,7 +16,7 @@ public interface MovieDao {
     //List<Movies> getAllMoviesInACategory(int categoryId);
 
     //UPDATE
-    void update(String title, int releaseYear, String writer, int duration, String summary, String review);
+    //void update(String title, int releaseYear, String writer, int duration, String summary, String review);
 
     //DESTROY
     void deleteById(int id);
