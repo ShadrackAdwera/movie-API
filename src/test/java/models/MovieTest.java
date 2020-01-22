@@ -103,6 +103,6 @@ public class MovieTest {
 
     //helpers
     public Movie setUpMovie(){
-        return new Movie("Avengers: Infinity War", 2018,"Russo Brothers", 150,"Thanos, Mad Titan","Excellent",1);
+        return new Movie("Avengers: Infinity War", 2018,"Russo Brothers", 150,"Thanos, Mad Titan","Excellent");
     }
 }

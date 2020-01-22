@@ -15,7 +15,7 @@ public class Movie implements Comparable<Movie> {
     private String formattedReviewTime;
     private int id;
 
-    public Movie(String title, int releaseYear, String writer, int duration, String summary, String review, int id){
+    public Movie(String title, int releaseYear, String writer, int duration, String summary, String review){
         this.title = title;
         this.releaseYear = releaseYear;
         this.writer = writer;
