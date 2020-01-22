@@ -1,10 +1,12 @@
 package dao;
 
+import models.Category;
 import models.Movie;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Sql2oMovieDao implements MovieDao {
@@ -24,6 +26,40 @@ public class Sql2oMovieDao implements MovieDao {
                     .getKey();
             movie.setId(id);
         } catch (Sql2oException ex) { System.out.println(ex); }
+    }
+
+    @Override
+    public void addCategoryToMovie(Movie movie, Category category){
+        String sql = "INSERT INTO movie_category (movieid, categoryid) VALUES (:movieId, :categoryId)";
+        try (Connection connection = sql2o.open()){
+            connection.createQuery(sql)
+                    .addParameter("movieId", movie.getId())
+                    .addParameter("categoryId", category.getId())
+                    .executeUpdate();
+        }
+    }
+
+    @Override
+    public List<Category> getAllCategoriesInAMovie(int movieId){
+        List<Category> categories = new ArrayList<>();
+
+        String joinQuery = "SELECT categoryid FROM movie_category WHERE movieid = :movieId";
+
+        try (Connection con = sql2o.open()) {
+            List<Integer> allCategoryIds = con.createQuery(joinQuery)
+                    .addParameter("movieId", movieId)
+                    .executeAndFetch(Integer.class);
+            for (Integer categoryId : allCategoryIds){
+                String categoryQuery = "SELECT * FROM category WHERE id = :categoryId";
+                categories.add(
+                        con.createQuery(categoryQuery)
+                                .addParameter("categoryId", categoryId)
+                                .executeAndFetchFirst(Category.class));
+            }
+        } catch (Sql2oException ex){
+            System.out.println(ex);
+        }
+        return categories;
     }
 
     @Override
