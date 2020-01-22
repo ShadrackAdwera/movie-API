@@ -14,7 +14,7 @@ public class App {
     public static void main(String[]args){
         Connection connection;
         Gson gson = new Gson();
-        String connectionString = "jdbc:h2:~/todolist.db;INIT=RUNSCRIPT from 'classpath:db/create.sql'";
+        String connectionString = "jdbc:h2:~/movie-API.db;INIT=RUNSCRIPT from 'classpath:db/create.sql'";
         Sql2o sql2o = new Sql2o(connectionString, "", "");
         Sql2oMovieDao movieDao = new Sql2oMovieDao(sql2o);
         Sql2oCategoryDao categoryDao = new Sql2oCategoryDao(sql2o);
@@ -32,7 +32,19 @@ public class App {
             return gson.toJson(categoryDao.allCategories());
         });
 
-        //add movie in a category
+        //create a movie
+        post("/movie/new", "application/json", (request, response) -> {
+            Movie movie = gson.fromJson(request.body(), Movie.class);
+            movieDao.save(movie);
+            response.status(201);
+            return gson.toJson(movie);
+        });
+        //display all movies
+        get("/movies", "application/json", (request, response) -> {
+            return gson.toJson(movieDao.allMovies());
+        });
+
+        //add movie to a category
         post("category/:categoryId/movies/:movieId", "application/json", (request, response) -> {
             int categoryId = Integer.parseInt(request.params("categoryId"));
             int movieId = Integer.parseInt(request.params("movieId"));
@@ -43,11 +55,14 @@ public class App {
             return gson.toJson(String.format("Category '%s' and movie '%s' have been associated",category.getName(), movie.getTitle()));
         });
             //get movie in a category
-            get("categories/:id/movies", "application/json", (request, response) -> {
+            get("category/:id/movies", "application/json", (request, response) -> {
                int categoryId = Integer.parseInt(request.params("id"));
                Category foundCategory = categoryDao.findById(categoryId);
                return gson.toJson(categoryDao.allMoviesInCategory(categoryId));
             });
+
+
+
 
 
         //FILTERS
