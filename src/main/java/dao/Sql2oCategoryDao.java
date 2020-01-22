@@ -39,7 +39,7 @@ public class Sql2oCategoryDao implements CategoryDao {
     }
     @Override
     public List<Category> allCategories(){
-        String sql = "SELECT * FROM categories";
+        String sql = "SELECT * FROM category";
         try(Connection connection = sql2o.open()) {
             return connection.createQuery(sql)
                     .executeAndFetch(Category.class);

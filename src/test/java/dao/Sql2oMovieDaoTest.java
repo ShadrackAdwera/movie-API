@@ -59,8 +59,6 @@ public class Sql2oMovieDaoTest {
     public void getAllCategoriesInAMovie() {
         Movie movie = setUpMovie();
         movieDao.save(movie);
-        Movie movie1 = setUpMovie();
-        movieDao.save(movie1);
         Category category = new Category("Horror", "Haunted House");
         categoryDao.save(category);
         Category category1 = new Category("Comedy","Laugh your ass out");
