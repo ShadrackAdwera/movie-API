@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
-public class Movie {
+public class Movie implements Comparable<Movie> {
     private String title;
     private int releaseYear;
     private String writer;
@@ -106,7 +106,7 @@ public class Movie {
 
     public String getFormattedReviewTime() {
         Date date = new Date(reviewTime);
-        String formattedDate = "DD:MM:YYYY @HH:MM AM/PM";
+        String formattedDate = "MM/dd/yyyy @ K:mm a";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(formattedDate);
         return simpleDateFormat.format(date);
 
@@ -114,7 +114,7 @@ public class Movie {
 
     public void setFormattedReviewTime() {
         Date date = new Date(this.reviewTime);
-        String formattedDate = "DD:MM:YYYY @HH:MM AM/PM";
+        String formattedDate = "MM/dd/yyyy @ K:mm a";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(formattedDate);
         this.formattedReviewTime = simpleDateFormat.format(date);
     }
@@ -125,5 +125,19 @@ public class Movie {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Override
+    public int compareTo(Movie movieObject){
+        if (this.reviewTime < movieObject.reviewTime)
+        {
+            return -1;
+        }
+        else if (this.reviewTime > movieObject.reviewTime){
+            return 1;
+        }
+        else {
+            return 0;
+        }
     }
 }
