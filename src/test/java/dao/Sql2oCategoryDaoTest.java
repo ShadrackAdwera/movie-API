@@ -81,22 +81,22 @@ public class Sql2oCategoryDaoTest {
         assertEquals(category.getId(), idOfCategory);
     }
 
-//    @Test
-//    public void allMoviesInCategory() {
-//        Movie movie = new Movie("aa",3456,"www", 234, "ert", "ay");
-//        movieDao.save(movie);
-//        Movie movie1 = new Movie("a",456,"ww", 214, "erth", "ayy");
-//        movieDao.save(movie1);
-//
-//        Category category = setUpCategory();
-//        categoryDao.save(category);
-//
-//        categoryDao.addMovieToCategory(category, movie);
-//        categoryDao.addMovieToCategory(category, movie1);
-//
-//        Movie [] movies = {movie, movie1};
-//        assertEquals(Arrays.asList(movies), categoryDao.allMoviesInCategory(category.getId()));
-//    }
+    @Test
+    public void allMoviesInCategory() {
+        Movie movie = new Movie("aa",3456,"www", 234, "ert", "ay");
+        movieDao.save(movie);
+        Movie movie1 = new Movie("a",456,"ww", 214, "erth", "ayy");
+        movieDao.save(movie1);
+
+        Category category = setUpCategory();
+        categoryDao.save(category);
+
+        categoryDao.addMovieToCategory(category, movie);
+        categoryDao.addMovieToCategory(category, movie1);
+
+        Movie [] movies = {movie, movie1};
+        assertEquals(Arrays.asList(movies), categoryDao.allMoviesInCategory(category.getId()));
+    }
 
     @Test
     public void deleteCategoryById() {

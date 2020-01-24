@@ -76,6 +76,23 @@ public class App {
                return gson.toJson(categoryDao.allMoviesInCategory(categoryId));
             });
 
+            post("movie/:movieId/categories/:categoryId","application/json", ((request, response) -> {
+                int categoryId = Integer.parseInt(request.params("categoryId"));
+                int movieId = Integer.parseInt(request.params("movieId"));
+                Category category = categoryDao.findById(categoryId);
+                Movie movie = movieDao.findById(movieId);
+                categoryDao.addMovieToCategory(category, movie);
+                response.status(201);
+                return gson.toJson(String.format("Movie '%s' and Category '%s' have been associated ", movie.getTitle(), category.getName()));
+            }));
+
+            //get category in a movie
+        get("movie/:id/categories", "application/json", (request, response) -> {
+            int movieId = Integer.parseInt(request.params("id"));
+            Movie foundMovie = movieDao.findById(movieId);
+            return gson.toJson(movieDao.getAllCategoriesInAMovie(movieId));
+        });
+
         //FILTERS
         options("/*",
                 (request, response) -> {
